@@ -7,6 +7,7 @@ import { FaHeart } from 'react-icons/fa'
 import FormattedPrice from "./FormattedPrice";
 import { useDispatch } from "react-redux";
 import { addToCart, addToFavorite } from "@/store/nextSlice";
+import Link from "next/link";
 
 interface Props {
     productData: ProductProps[];
@@ -19,9 +20,21 @@ const Products = ({productData}: Props) => {
             {productData.map((item) => (
                 <div key={item._id} className="w-full bg-white text-black p-4 border border-gray-300 rounded-lg group overflow-hidden">
                     <div className="w-full h-[260px] relative">
+                        <Link href={{ pathname: `/${item._id}`, query: {
+                            _id: item._id,
+                            brand: item.brand,
+                            category: item.category,
+                            description: item.description,
+                            image: item.image,
+                            isNew: item.isNew,
+                            oldPrice: item.oldPrice,
+                            price: item.price,
+                            title: item.title
+                        }}}>
                         <Image
                         className="w-full h-full object-cover scale-90 hover:scale-100 transition-transform duration-300"
                         src={item.image} alt="productImage" width={300} height={300}/>
+                        </Link>
                         <div className="w-12 h-24 absolute bottom-10 right-0 border-[1px] border-gray-400 bg-white rounded-md flex flex-col translate-x-20 group-hover:translate-x-0 transition-transparent duration-300">
                             <span
                             onClick={() => dispatch(addToCart({
